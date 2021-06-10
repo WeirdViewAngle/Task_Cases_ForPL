@@ -54,8 +54,7 @@ namespace task3
                     }
                 }                
 
-                Console.WriteLine(key);
-                Console.WriteLine(index);
+                Console.WriteLine(index + "\n");
             }
             Console.ReadKey();
         }
