@@ -11,7 +11,6 @@ namespace task4
     {
         static void Main(string[] args)
         {
-            int incr = 0;
 
             args = new string[1];
             Console.WriteLine("Enter argument below: ");
@@ -61,25 +60,53 @@ namespace task4
                 }
             }
 
+            List<TimePeriod> timePeriodList = new List<TimePeriod>();
             for (int j = 0; j < timePeriodListsDict[PeriodStatus.Start].Count; j++)
             {
+                TimePeriod currentTimePeriod = new TimePeriod(0,
+                    timePeriodListsDict[PeriodStatus.Start][j],
+                    timePeriodListsDict[PeriodStatus.End][j]);
+
                 for (int i = 0; i < timePeriodListsDict[PeriodStatus.Start].Count; i++)
                 {
-                    int rt = CompareTimeframes(timePeriodListsDict[PeriodStatus.Start][j],
+                    int compResult = CompareTimeframes(timePeriodListsDict[PeriodStatus.Start][j],
                         timePeriodListsDict[PeriodStatus.End][j],
                         timePeriodListsDict[PeriodStatus.Start][i],
                         timePeriodListsDict[PeriodStatus.End][i]);
-                    incr++;
-                    if (rt == 1)
-                        Console.WriteLine("xoba");
-                    else if (rt == 3)
-                        Console.WriteLine("net");
-                    else
-                        Console.WriteLine("da");                   
+
+                    if (compResult == 1)
+                        currentTimePeriod.CrossCount++;
+                    else if (compResult == 2)
+                        currentTimePeriod.CrossCount++;
+                }
+
+                timePeriodList.Add(currentTimePeriod);
+            }
+            FindPeriods(timePeriodList);
+            Console.ReadKey();
+        }
+
+
+        public static void FindPeriods(List<TimePeriod> list)
+        {
+            int highestCount = 0;
+
+            foreach (TimePeriod tp in list)
+            {
+                if(tp.CrossCount > highestCount)
+                {
+                    highestCount = tp.CrossCount;
                 }
             }
 
-            Console.WriteLine(incr);
+            foreach(TimePeriod TP in list)
+            {
+                if(TP.CrossCount == highestCount)
+                {
+                    Console.WriteLine(TP.StartTime.Hour.ToString() + ":" + TP.StartTime.Minute.ToString() + " " +
+                        TP.EndTime.Hour.ToString() + ":" + TP.EndTime.Minute.ToString());
+                }
+            }
         }
 
         //1 - Identical periods
@@ -109,21 +136,17 @@ namespace task4
 
     }
 }
-    
-
-
-          
-    
 
     public class TimePeriod
     {
-        int crossStatus;
+        int crossCount;
         DateTime startTime;
         DateTime endTime;
 
-        public int CrossStatus
+        public int CrossCount
         {
-            get { return crossStatus; }
+            get { return crossCount; }
+            set { crossCount = value; }
         }
 
         public DateTime StartTime
@@ -138,7 +161,7 @@ namespace task4
 
         public TimePeriod(int status, DateTime st, DateTime et)
         {
-            crossStatus = status;
+            crossCount = status;
             startTime = st;
             endTime = et;
         }
