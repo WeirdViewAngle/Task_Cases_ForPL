@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace task2
@@ -18,6 +19,8 @@ namespace task2
         public float Ycord
         {
             get { return Y; }
+            set { Y = value;
+            }
         }
 
         public Point(float x, float y)
@@ -34,8 +37,7 @@ namespace task2
             args = new string[2];
             Console.WriteLine("Enter arguments below: ");
             args[0] = Console.ReadLine();
-            args[1] = Console.ReadLine();
-            Console.ReadKey();                      
+            args[1] = Console.ReadLine();              
 
 
             Dictionary<int, Point> heightsDict = new Dictionary<int, Point>();
@@ -50,10 +52,25 @@ namespace task2
                     foreach(string height in heights)
                     {
                         var value = height.Split();
-                        if (float.TryParse(value[0], out float textToFloatValue1) && float.TryParse(value[1], out float textToFloatValue2))
+                        string valueNoN0 = String.Empty;
+                        string valueNoN1 = String.Empty;
+                        for (int i = 0; i < value[0].Length; i++)
                         {
-                            heightsDict.Add(increment, new Point(textToFloatValue1, textToFloatValue2));
+                            if (Char.IsDigit(value[0][i]))
+                                valueNoN0 += value[0][i];
+                            else if(value[0][i] == '.')
+                                valueNoN0 += ".";
                         }
+                        for (int i = 0; i < value[1].Length; i++)
+                        {
+                            if (Char.IsDigit(value[1][i]))
+                                valueNoN1 += value[1][i];
+                            else if (value[1][i] == '.')
+                                valueNoN1 += ".";
+                        }
+                                             heightsDict.Add(increment, new Point(
+                            float.Parse(valueNoN0, CultureInfo.InvariantCulture),
+                            float.Parse(valueNoN1, CultureInfo.InvariantCulture)));
                         increment++;
                     }
 
@@ -65,12 +82,35 @@ namespace task2
                     int increment = 0;
                     foreach (string point in points)
                     {
-                        var value = point.Split();
-                        if (float.TryParse(value[0], out float textToFloatValue1) && float.TryParse(value[1], out float textToFloatValue2))
+                        if (point == "" || point == null)
                         {
-                            pointsDict.Add(increment, new Point(textToFloatValue1, textToFloatValue2));
+                            continue;
                         }
-                        increment++;
+                        else
+                        {
+                            var value = point.Split();
+
+                            string valueNoN0 = String.Empty;
+                            string valueNoN1 = String.Empty;
+                            for (int i = 0; i < value[0].Length; i++)
+                            {
+                                if (Char.IsDigit(value[0][i]))
+                                    valueNoN0 += value[0][i];
+                                else if (value[0][i] == '.')
+                                    valueNoN0 += ".";
+                            }
+                            for (int i = 0; i < value[1].Length; i++)
+                            {
+                                if (Char.IsDigit(value[1][i]))
+                                    valueNoN1 += value[1][i];
+                                else if (value[1][i] == '.')
+                                    valueNoN1 += ".";
+                            }
+                            pointsDict.Add(increment, new Point(
+                                float.Parse(valueNoN0, CultureInfo.InvariantCulture),
+                                float.Parse(valueNoN1, CultureInfo.InvariantCulture)));
+                            increment++;
+                        }
                     }
 
                 }

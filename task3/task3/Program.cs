@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -31,10 +32,16 @@ namespace task3
                             }
                             else
                             {
-                                if (float.TryParse(value, out float textToFloatValue))
+                                string valueNoN = String.Empty;
+                                for (int j = 0; j < value.Length; j++)
                                 {
-                                    cashTimings[(CashNum)i].Add(textToFloatValue);
+                                    if (Char.IsDigit(value[j]))
+                                        valueNoN += value[j];
+                                    else if (value[j] == '.')
+                                        valueNoN += ".";
                                 }
+                                
+                                cashTimings[(CashNum)i].Add(float.Parse(valueNoN, CultureInfo.InvariantCulture));                               
 
                             }
                         }
