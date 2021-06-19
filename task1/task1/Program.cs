@@ -29,8 +29,9 @@ namespace task1
                     }
                 }
             }
-            
+
             //convert to array
+            numValues.Sort();
             decimal[] readyNumbers = numValues.ToArray();
 
             Console.WriteLine(PercentileCalc(readyNumbers, 0.9f).ToString("n2") + "\n");

@@ -127,6 +127,7 @@ namespace task2
 
         static String LocatePoint(Dictionary<int, Point> heightsDict, Point point)
         {
+            bool beenOnes = false;
             for (int i = heightsDict.Keys.Count - 1; i >= 0 ; i--)
             {
                 if(point.Xcord == heightsDict[i].Xcord && point.Ycord == heightsDict[i].Ycord)
@@ -157,8 +158,9 @@ namespace task2
                 {
                     return "3";
                 }
-                if(D == 0)
+                if(D == 0 && beenOnes)
                 {
+                    beenOnes = true;
                     return "1"; ;
                 }
             }
