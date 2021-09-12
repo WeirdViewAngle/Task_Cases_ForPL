@@ -20,6 +20,7 @@ namespace task3
             {
                 for (int i = 0; i <= args.Length - 1; i++)
                 {
+
                     if (File.Exists(args[i]))
                     {
                         string[] valuesTempAr = File.ReadAllLines(args[i].Trim('\n'));
@@ -50,6 +51,7 @@ namespace task3
             }
             foreach (CashNum key in cashTimings.Keys)
             {
+
                 int index = 0;
                 float tempVar = 0;
                 foreach (float item in cashTimings[key])
@@ -75,4 +77,6 @@ namespace task3
             Cash5
         }
     }
+
+    //new2 //new
 }
