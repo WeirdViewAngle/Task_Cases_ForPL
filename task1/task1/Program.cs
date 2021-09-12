@@ -98,6 +98,6 @@ namespace task1
             return result / parseValues.Length;
         }
 
-        
+        //not new //
     }
 }
